@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+{% block content %}
+{% if title %}
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+	<h1 clas>{{ title }}</h1>
+	</div>
+</div>
+{% endif %}
+
+<div class="row">
+	<div class="col-sm-6 col-sm-offset-3">
+		<form method='POST' action=''>{% csrf_token %}
+		<!-- <input type='text'> -->
+		{{form|crispy}}
+		<input class="btn btn-derault" type='submit' value='Submit'/>
+		</form>
+		{% endblock content %}
+	</div>
+</div>

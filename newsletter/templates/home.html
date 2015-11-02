@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+
+<style>
+
+{% block style %}
+.navbar-static-top{
+	margin-bottom: 0px;
+	
+}
+.jumbotron {
+	background-color: #400E0E;
+	color: #C7C4C4;
+}
+
+{% endblock style %}
+
+</style>
+
+{%block jumbotron %}
+
+<!-- Main component for a primary marketing message or call to action -->
+<div class="jumbotron">
+    <div class="container">
+	<div class="row">
+		<div class="col-xs-6">
+			<h1>Try Django 1.8</h1>
+			<p>This example is a quick exercise to illustrate how the default, static and fixed to top navbar work. </p>
+			<p>To see the difference between static and fixed top navbars, just scroll.</p>
+			<p>
+			  <a class="btn btn-lg btn-primary" href="" role="button">Join us &raquo;</a>
+			</p>
+		</div>
+		<div class="col-sm-6">
+			<iframe width="560" height="315" src="https://www.youtube.com/embed/3W8XQt7K4hQ" frameborder="0" allowfullscreen></iframe>
+		</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{%block content %}
+{% if request.user.is_authenticated %}
+<h1>You are logged in</h1>
+
+{% if queryset %}
+<h1>Welcome</h1>
+{%for instance in queryset%}
+{{instance.full_name}} <br/>
+{%endfor%}
+{% endif %}
+{% else %}
+
+<div class="row">
+	<div class="col-xs-3">
+		<p class="lead text-align-center">Build with Django &amp; Bootstrap</p>
+	</div>
+		<div class="col-xs-3">
+			<p class="lead text-align-center">Our new subscribers</p>
+			{%for instance in queryset%}
+				<p><a href="{% url "newsletter.views.signup" instance.id %}">{{instance.full_name}} </a></p>
+			{%endfor%}
+	</div>
+<!-- 	newsletter form-->
+	<div class="col-xs-3 pull-right">
+		<p class="lead text-align-center">{{title}}</p>
+		<form method='POST' action=''>{% csrf_token %}
+			<!-- <input type='text'> -->
+			{{form|crispy}}
+			<input class='btn btn-primary' type='submit' value='SignUp'/>
+		</form>
+	</div>
+</div>	
+{% endif %}
+{%endblock%}
